@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@4.12.0
+  aws-eks: circleci/aws-eks@2.2.0
+
+jobs:
+  build_app:
+    docker:
+      - image: cimg/node:19.8.0
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            cd frontend
+            yarn install
+      - run:
+          name: Build app
+          command: |
+            pwd
+            cd frontend
+            yarn build
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: app-build
+      - store_artifacts:
+          path: build
+  lint_app:
+    docker:
+      - image: cimg/node:19.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: app-build
+      - run:
+          name: Lint app
+          command: |
+            pwd
+            cd frontend
+            yarn lint
+
+workflows:
+  App_Deployment_Pipeline:
+    jobs:
+      - build_app
+      - lint_app:
+          requires: [build_app]
