@@ -18,6 +18,7 @@ jobs:
       - run:
           name: Build app
           command: |
+            pwd
             cd frontend
             yarn build
       - save_cache:
@@ -25,7 +26,7 @@ jobs:
           key: app-build
       - store_artifacts:
           path: build
-  lint_format_code:
+  lint_app:
     docker:
       - image: cimg/node:19.8.0
     steps:
@@ -33,15 +34,15 @@ jobs:
       - restore_cache:
           key: app-build
       - run:
-          name: Lint and format code
+          name: Lint app
           command: |
+            pwd
             cd frontend
             yarn lint
-            yarn format
 
 workflows:
   App_Deployment_Pipeline:
     jobs:
-      - build
-      - lint_format_code:
+      - build_app
+      - lint_app:
           requires: [build_app]
