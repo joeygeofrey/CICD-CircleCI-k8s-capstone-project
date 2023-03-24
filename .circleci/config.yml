@@ -72,7 +72,7 @@ jobs:
       - run:
           name: Lint Dockerfile
           command: |
-            brew install hadolint
+            HOMEBREW_NO_INSTALL_UPGRADE=1 brew install hadolint
             hadolint Dockerfile | tee -a hadolint_lint.txt
             lintErrors=$(stat -f%z hadolint_lint.txt)
             if [ "$lintErrors" -gt "0" ]; then
