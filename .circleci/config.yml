@@ -72,9 +72,8 @@ jobs:
       - run:
           name: Lint Dockerfile
           command: |
-            sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64
-            sudo chmod +x /bin/hadolint
-            /bin/hadolint Dockerfile | tee -a hadolint_lint.txt
+            brew install hadolint
+            hadolint Dockerfile | tee -a hadolint_lint.txt
             lintErrors=$(stat -f%z hadolint_lint.txt)
             if [ "$lintErrors" -gt "0" ]; then
                 echo "Errors found in the Dockerfile."
