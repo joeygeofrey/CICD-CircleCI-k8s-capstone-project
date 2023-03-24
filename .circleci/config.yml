@@ -135,5 +135,8 @@ workflows:
           requires: [lint_format_code]
       - create_cluster:
           requires: [build_push_image]
+          filters:
+            branches:
+              only: [master]
       - deploy_to_cluster:
           requires: [create_cluster]
