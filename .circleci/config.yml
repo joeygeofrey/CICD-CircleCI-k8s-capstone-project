@@ -64,6 +64,24 @@ jobs:
             cd frontend
             yarn format
       - slack_notify_fail
+  lint_image:
+    macos:
+      xcode: 14.0.0
+    steps:
+      - checkout
+      - run:
+          name: Lint Dockerfile
+          command: |
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install hadolint
+            hadolint Dockerfile | tee -a hadolint_lint.txt
+            lintErrors=$(stat -f%z hadolint_lint.txt)
+            if [ "$lintErrors" -gt "0" ]; then
+                echo "Errors found in the Dockerfile."
+                exit 1
+            else
+                echo "No errors were found in the Dockerfile."
+            fi
+      - slack_notify_fail
   build_push_image:
     docker:
       - image: cimg/base:2023.03
@@ -131,8 +149,13 @@ workflows:
       - build_app
       - lint_format_code:
           requires: [build_app]
+      - lint_image:
+          requires: [lint_format_code]
       - build_push_image:
           requires: [lint_format_code]
+          filters:
+            branches:
+              only: [master]
       - create_cluster:
           requires: [build_push_image]
           filters:
