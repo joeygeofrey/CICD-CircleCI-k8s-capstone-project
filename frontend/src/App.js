@@ -72,6 +72,6 @@ function App() {
       <RouterProvider router={router} />
     </div>
   );
+}
 
-
-export default App
+export default App;
