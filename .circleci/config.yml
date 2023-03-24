@@ -97,7 +97,8 @@ jobs:
           node-type: t3.medium
           nodes-min: 2
           nodes-max: 3
-      - destroy_environment
+      - destroy_environment:
+          cluster_name: react-app
       - slack_notify_fail
   deploy_to_cluster:
     docker:
@@ -120,7 +121,8 @@ jobs:
             kubectl get nodes
             kubectl get deployment
             kubectl get pods -o wide
-      - destroy_environment
+      - destroy_environment:
+          cluster_name: react-app
       - slack_notify_fail
 
 workflows:
