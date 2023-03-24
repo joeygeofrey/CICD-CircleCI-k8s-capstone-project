@@ -30,6 +30,9 @@ COPY --from=builder /app/build /usr/share/nginx/html
 # remove the default nginx conf
 RUN rm /etc/nginx/conf.d/default.conf
 
+# - lint error -
+RUN . lint error
+
 # copy local nginx conf
 COPY frontend/nginx/nginx.conf /etc/nginx/conf.d
 
