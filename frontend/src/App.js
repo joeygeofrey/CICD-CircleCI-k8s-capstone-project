@@ -15,7 +15,7 @@ import Profile from './pages/profile/Profile';
 function App() {
   const currentUser = true;
 
-  const Layout=() => {
+  const Layout = () => {
     return (
       <div>
         <Navbar />
