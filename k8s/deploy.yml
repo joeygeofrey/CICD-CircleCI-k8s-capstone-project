@@ -36,6 +36,6 @@ spec:
   selector:
     app: friendbook
   ports:
-  - name: HTTP
+  - name: http
     port: 80
     targetPort: 80
