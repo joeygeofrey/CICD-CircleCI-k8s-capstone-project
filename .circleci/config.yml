@@ -64,7 +64,7 @@ jobs:
             cd frontend
             yarn format
       - slack_notify_fail
-  lint_image:
+  lint_dockerfile:
     macos:
       xcode: 14.0.0
     steps:
@@ -149,10 +149,10 @@ workflows:
       - build_app
       - lint_format_code:
           requires: [build_app]
-      - lint_image:
+      - lint_dockerfile:
           requires: [lint_format_code]
       - build_push_image:
-          requires: [lint_image]
+          requires: [lint_dockerfile]
           filters:
             branches:
               only: [master]
