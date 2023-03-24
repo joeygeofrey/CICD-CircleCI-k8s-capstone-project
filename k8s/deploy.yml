@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: friendbook-lb-svc
+  name: friendbook
   labels:
     app: friendbook
   namespace: default
