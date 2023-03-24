@@ -152,7 +152,7 @@ workflows:
       - lint_image:
           requires: [lint_format_code]
       - build_push_image:
-          requires: [lint_format_code]
+          requires: [lint_image]
           filters:
             branches:
               only: [master]
