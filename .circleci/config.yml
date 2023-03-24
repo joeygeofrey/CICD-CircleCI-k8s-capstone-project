@@ -123,7 +123,6 @@ jobs:
       - image: 'cimg/python:3.11.2'
     steps:
       - checkout
-      - aws-cli/setup
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: react-app
           install-kubectl: true
