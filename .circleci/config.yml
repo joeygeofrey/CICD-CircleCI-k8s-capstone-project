@@ -192,7 +192,7 @@ workflows:
       - lint_dockerfile:
           requires: [build_app]
       - build_push_image:
-          requires: [lint_dockerfile]
+          requires: [lint_format_code,lint_dockerfile]
           filters:
             branches:
               only: [master]
