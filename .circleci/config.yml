@@ -92,16 +92,17 @@ jobs:
       - run:
           name: Build image
           command: |
-            TAG=$CIRCLE_BUILD_NUM
-            docker build -t joeygeofrey/friendbook:v-$TAG .
+            docker build -t friendbook .
             docker image ls
       - run:
           name: Push image
           command: |
             TAG=$CIRCLE_BUILD_NUM
-            docker login -u joeygeofrey -p $DOCKERHUB_PASS
-            docker tag joeygeofrey/friendbook:v-$TAG joeygeofrey/friendbook:latest
-            docker push joeygeofrey/friendbook:latest
+            docker login -u joeygeof -p $DOCKERHUB_PASS
+            docker image tag friendbook joeygeof/friendbook:latest
+            docker image push joeygeof/friendbook
+            docker image tag friendbook joeygeof/friendbook:v-$TAG
+            docker image push joeygeof/friendbook:v-$TAG
       - slack_notify_fail
   create_cluster:
     docker:
@@ -109,38 +110,77 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup
-      - aws-eks/create-cluster:
-          cluster-name: react-app
-          nodegroup-name: react-app-nodes
-          node-type: t3.medium
-          nodes-min: 2
-          nodes-max: 3
+      - aws-eks/setup
+      - run:
+          name: Check for cluster & create cluster
+          command: |
+            set +e
+            eksctl get cluster --region us-east-2 --name react-app
+            exit_code=$?
+            set -e
+            if [ $exit_code -ne 0 ]; then
+              echo "Creating react-app cluster..."
+              aws sts get-caller-identity                   
+              eksctl create cluster --region us-east-2 --name react-app --nodegroup-name react-app-nodes --node-type t3.medium --nodes-min 2 --nodes-max 3
+            else
+              echo "Cluster already exists. Skipping cluster creation job."
+            fi
       - destroy_environment:
           cluster_name: react-app
       - slack_notify_fail
-  deploy_to_cluster:
+  deploy_update_to_cluster:
     docker:
       - image: 'cimg/python:3.11.2'
     steps:
       - checkout
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: react-app
-          install-kubectl: true
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "k8s/deploy.yml"
-          resource-name: deployment/friendbook
-          get-rollout-status: false
-          show-kubectl-command: true
+      - aws-cli/setup
+      - aws-eks/setup
+      - kubernetes/install
+      - run:
+          name: Deploy to cluster
+          command: |
+            aws eks update-kubeconfig --name react-app
+            kubectl apply -f k8s/deploy.yml
       - run:
           name: Check deployment
           command: |
             sleep 15
-            kubectl get svc
-            kubectl get nodes
+            echo "Deployments:"
             kubectl get deployment
+            echo "Services:"
+            kubectl get svc
+            echo "Nodes:"
+            kubectl get nodes
+            echo "Pods:"
             kubectl get pods -o wide
-      - destroy_environment:
-          cluster_name: react-app
+            echo "Rollouts:"
+            kubectl rollout history deployment/friendbook 
+      - run:
+          name: Update image to cluster
+          command: |
+            kubectl rollout restart deployment/friendbook
+            sleep 15
+            echo "Deployments:"
+            kubectl get deployment
+            echo "Services:"
+            kubectl get svc
+            echo "Nodes:"
+            kubectl get nodes
+            echo "Pods:"
+            kubectl get pods -o wide
+            echo "Rollouts:"
+            kubectl rollout history deployment/friendbook
+      - slack_notify_fail
+  delete_cluster:
+    docker:
+      - image: 'cimg/python:3.11.2'
+    steps:
+      - checkout
+      - aws-cli/setup
+      - aws-eks/setup
+      - run:
+          name: Delete cluster
+          command: eksctl delete cluster --region us-east-2 --name react-app
       - slack_notify_fail
 
 workflows:
@@ -150,7 +190,7 @@ workflows:
       - lint_format_code:
           requires: [build_app]
       - lint_dockerfile:
-          requires: [lint_format_code]
+          requires: [build_app]
       - build_push_image:
           requires: [lint_dockerfile]
           filters:
@@ -161,5 +201,10 @@ workflows:
           filters:
             branches:
               only: [master]
-      - deploy_to_cluster:
+      - deploy_update_to_cluster:
           requires: [create_cluster]
+#      - delete_cluster-approval:
+#          type: approval
+#          requires: [deploy_update_to_cluster]
+#      - delete_cluster:
+#          requires: [delete_cluster-approval]
