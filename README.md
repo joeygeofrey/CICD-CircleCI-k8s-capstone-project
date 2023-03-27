@@ -13,26 +13,26 @@ Upon successful completion of the Continuous Integration, Continuous Deployment 
 
 ## Project Screenshots:
 
-![An image of the CircleCI Deployment Piepeline](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/CircleCIPipeline.png)
 #### CircleCI Deployment Pipeline - 01/07
+![An image of the CircleCI Deployment Piepeline](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/CircleCIPipeline.png)
 
-![An image of the CircleCI dockerfile lint job failure](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/LintError.png)
 #### CircleCI/Hadolint - Dockerfile Lint Error - 02/07
+![An image of the CircleCI dockerfile lint job failure](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/LintError.png)
 
-![An image of the CircleCI dockerfile lint job success](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/LintErrorFixed.png)
 #### CircleCI/Hadolint - Dockerfile Lint Error Fix - 03/07
+![An image of the CircleCI dockerfile lint job success](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/LintErrorFixed.png)
 
-![An image of the CircleCI EKS deployment](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/Deployments.png)
 #### CircleCI/EKS - K8s Deployment - 04/07
+![An image of the CircleCI EKS deployment](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/Deployments.png)
 
-![An image of the Amazon EC2 Page](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/AWSEC2.png)
 #### AWS - EC2 Node Deployments - 05/07
+![An image of the Amazon EC2 Page](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/AWSEC2.png)
 
-![An image of the Amazon Load Balancer configuration](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/LoadBalancer.png)
 #### AWS - Load Balancer - 06/07
+![An image of the Amazon Load Balancer configuration](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/LoadBalancer.png)
 
-![A GIF media of the live application](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/Application.gif)
 #### Live application - 07/07
+![A GIF media of the live application](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/Application.gif)
 
 
 
