@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: friendbook
-        image: joeygeofrey/friendbook:latest
+        image: joeygeof/friendbook:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 80
