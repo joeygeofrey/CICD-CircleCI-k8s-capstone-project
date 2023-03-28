@@ -202,7 +202,7 @@ workflows:
 #            branches:
 #              only: [master]
       - create_cluster:
-          requires: [build_push_image]
+          requires: [docker/publish]
           filters:
             branches:
               only: [master]
