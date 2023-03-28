@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.12.0
-  docker: circleci/docker@2.2.0
   aws-cli: circleci/aws-cli@3.1.4
   aws-eks: circleci/aws-eks@2.2.0
   kubernetes: circleci/kubernetes@1.3.1
@@ -192,17 +191,13 @@ workflows:
           requires: [build_app]
       - lint_dockerfile:
           requires: [build_app]
-      - docker/publish:
-          image: joeygeof/friendbook:latest
-          update-description: true
+      - build_push_image:
           requires: [lint_format_code,lint_dockerfile]
-#      - build_push_image:
-#          requires: [lint_format_code,lint_dockerfile]
-#          filters:
-#            branches:
-#              only: [master]
+          filters:
+            branches:
+              only: [master]
       - create_cluster:
-          requires: [docker/publish]
+          requires: [build_push_image]
           filters:
             branches:
               only: [master]
