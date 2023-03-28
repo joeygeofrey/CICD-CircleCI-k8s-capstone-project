@@ -1,7 +1,7 @@
 # CICD - React Web App k8s Deployment - Joey Geofrey
 
 ## Build Status:
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/joeygeofrey/CICD-k8s-capstone-project/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/joeygeofrey/CICD-k8s-capstone-project/tree/master)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/joeygeofrey/CICD-CircleCI-k8s-capstone-project/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/joeygeofrey/CICD-CircleCI-k8s-capstone-project/tree/master)
 
 ## Project Scope:
 
@@ -34,5 +34,8 @@ Upon successful completion of the Continuous Integration, Continuous Deployment 
 #### Live application - 07/07
 ![A GIF media of the live application](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/Application.gif)
 
+## Project Links:
 
-
+GitHub Repo: https://github.com/joeygeofrey/CICD-CircleCI-k8s-capstone-project
+<br>
+Docker Hub Repo: https://hub.docker.com/r/joeygeof/friendbook/tags
