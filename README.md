@@ -32,7 +32,7 @@ Upon successful completion of the Continuous Integration, Continuous Deployment 
 ![An image of the Amazon Load Balancer configuration](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/LoadBalancer.png)
 
 #### Live application - 07/07
-![A GIF media of the live application](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/Application.gif)
+![A GIF media of the live application](https://github.com/joeygeofrey/CICD-k8s-capstone-project/blob/master/screenshots/App.gif)
 
 ## Project Links:
 
